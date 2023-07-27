@@ -2,6 +2,7 @@ import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 
 const feedbackService = createApi({
     reducerPath: 'feedback',
+    tagTypes: "feedbacks",
     baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:5000/api/'
     }),
@@ -14,28 +15,30 @@ const feedbackService = createApi({
                        method: 'POST',
                        body: data
                    }
-               }
+               },
+               invalidatesTags: ["feedbacks"],
            }),
-           userRegister: builder.mutation({
-            query: data => {
+           getfeedback: builder.query({
+            query: page => {
                 return {
-                    url: '/register',
-                    method: 'POST',
-                    body: data
+                    url: `getData/${page}`,
+                    method: 'GET', 
                 }
-            }
+            },
+            providesTags: ["feedbacks"],
            }),
-           userLogin: builder.mutation({
-            query: loginData => {
+           feedbackDelete: builder.mutation({
+            query: (id) => {
                 return {
-                    url: '/login',
-                    method: 'POST',
-                    body: loginData
+                    url: `feedbackDelete/${id}`,
+                    method: 'DELETE',
                 }
-            }
+            },
+            invalidatesTags: ["feedbacks"],
+
            })
        }
     }
 });
-export const {useCreateFeedBackMutation, useUserRegisterMutation, useUserLoginMutation} = feedbackService
+export const {useCreateFeedBackMutation, useFeedbackDeleteMutation, useGetfeedbackQuery} = feedbackService
 export default feedbackService

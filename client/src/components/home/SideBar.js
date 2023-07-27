@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAllCategoriesQuery } from '../../store/services/categoryService';
 import { FcAbout } from 'react-icons/fc';
 import { TbBrandAirbnb } from 'react-icons/tb';
+import { MdOutlineContactPhone } from 'react-icons/md';
 import { useAllBrandsQuery } from '../../store/services/brandService';
 const SideBar = ({closeSidebar,side}) => {
     console.log("Sidev",side);
@@ -104,10 +105,15 @@ const SideBar = ({closeSidebar,side}) => {
          }
           
         </div>
+        <Link to="/contact" className="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer ">
+          <MdOutlineContactPhone/>
+          <span className="text-[15px] ml-4 text-black">ContactUs</span>
+        </Link>
         <Link to="/about" className="p-2.5 mt-2 flex items-center rounded-md px-4 duration-300 cursor-pointer ">
           <FcAbout/>
           <span className="text-[15px] ml-4 text-black">About</span>
         </Link>
+       
         
       </div>
     </div>

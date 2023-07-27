@@ -7,6 +7,7 @@ import { clearMessage, setSuccess } from "../../store/reducers/globalReducer";
 import Spinner from "../../components/Spinner";
 import Pagination from "../../components/Pagination";
 import { useDeleteBrandMutation, useGetBrandsQuery } from "../../store/services/brandService";
+import { useFeedbackDeleteMutation, useGetfeedbackQuery } from "../../store/services/feedbackService";
 const FeedBack = () => {
    let {page} = useParams();
    if(!page) {
@@ -14,8 +15,8 @@ const FeedBack = () => {
    }
     const {success} = useSelector(state => state.globalReducer);
     const dispatch = useDispatch();
-    const {data = [], isFetching} = useGetBrandsQuery(page);
-    const [removeBrand, response] = useDeleteBrandMutation();
+    const {data = [], isFetching} = useGetfeedbackQuery(page);
+    const [removeBrand, response] = useFeedbackDeleteMutation();
     console.log(data)
     const deleteCat = id => {
        if(window.confirm('Are you really want to delete the Brand ?')) {
@@ -34,11 +35,8 @@ const FeedBack = () => {
     }, [])
     return(
        <Wrapper>
-           <ScreenHeader>
-              <Link to="/dashboard/create-brand" className="btn-dark">add Brand <i className="bi bi-plus"></i></Link>
-           </ScreenHeader>
            {success && <div className="alert-success">{success}</div>}
-           {!isFetching ? data?.brand?.length > 0 && <><div>
+           {!isFetching ? data?.data?.length > 0 && <><div>
               <table className="w-full bg-gray-900 rounded-md">
                  <thead>
                     <tr className="border-b border-gray-800 text-left">
@@ -50,21 +48,21 @@ const FeedBack = () => {
                     </tr>
                  </thead>
                  <tbody>
-                    {data?.brand?.map(brand => (
-                       <tr key={brand._id} className="odd:bg-gray-800">
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{brand.name}</td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400">
-                           <img src={`/uploads/brand/${brand.image}`} alt="image name" className="w-20 h-20 rounded-md object-cover" />
-                        </td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/update-brand-image/${brand._id}`} className="btn btn-warning">edit</Link></td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/update-brand/${brand._id}`} className="btn btn-warning">edit</Link></td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><button className="btn btn-danger" onClick={() => deleteCat(brand._id)}>delete</button></td>
+                    {data?.data?.map(item => (
+                       <tr key={item._id} className="odd:bg-gray-800">
+                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.name}</td>
+                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.email}</td>
+                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.subject}</td>
+                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.message}</td>
+                          
+                         
+                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><button className="btn btn-danger" onClick={() => deleteCat(item._id)}>delete</button></td>
                        </tr>
                     ))}
                  </tbody>
               </table>
            </div>
-           <Pagination page={parseInt(page)} perPage={data.perPage} count={data.count} path="dashboard/brand" /></> : <Spinner />}
+           <Pagination page={parseInt(page)} perPage={data.perPage} count={data.count} path="dashboard/feedback" /></> : <Spinner />}
        </Wrapper>
     )
 }

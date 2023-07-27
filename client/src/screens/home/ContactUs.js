@@ -157,8 +157,7 @@ const ContactUs = () => {
         </div>
       <iframe
   src="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d217659.49593491203!2d74.3243776!3d31.5260928!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2s!4v1690365114924!5m2!1sen!2s"
-  width="450px"
-  height="300px"
+  className="w-full lg:w-[450px] h-[300px] "
   style={{ border: 0,borderRadius:8}}
   allowFullScreen=""
   loading="lazy"
@@ -174,7 +173,7 @@ const ContactUs = () => {
       </div>
       <form onSubmit={onsubmit}
         className="w-full mx-auto flex flex-col justify-center "
-        noValidate=""
+       
       >
         <div className="flex flex-col space-y-5">
           <div className="flex flex-col md:flex-row space-y-5 md:space-y-0">
@@ -193,9 +192,7 @@ const ContactUs = () => {
                 value={state.name}
                 placeholder="Enter Your Name"
                 className="py-2  px-4 md:px-5 w-full appearance-none transition duration-150 ease-in-out border text-input text-xs lg:text-sm font-body placeholder-body min-h-12 transition duration-200 ease-in-out bg-white border-gray-300 focus:outline-none focus:border-heading h-11 md:h-12 rounded-md"
-                autoComplete="off"
-                spellCheck="false"
-                aria-invalid="false"
+                
               />
             </div>
             <div className="w-full  md:w-1/2 ltr:md:ml-2.5 rtl:md:mr-2.5 lg:ml-10 rtl:lg:mr-5 mt-2 md:mt-0">
@@ -213,9 +210,7 @@ const ContactUs = () => {
                 onChange={inputHandle}
                 placeholder="Enter Your Email"
                 className="py-2 px-4  md:px-5 w-full appearance-none transition duration-150 ease-in-out border text-input text-xs lg:text-sm font-body placeholder-body min-h-12 transition duration-200 ease-in-out bg-white border-gray-300 focus:outline-none focus:border-heading h-11 md:h-12 rounded-md"
-                autoComplete="off"
-                spellCheck="false"
-                aria-invalid="false"
+              
               />
             </div>
           </div>
@@ -234,9 +229,7 @@ const ContactUs = () => {
               onChange={inputHandle}
               placeholder="Enter Your Subject"
               className="py-2 px-4 ml md:px-5 w-full appearance-none transition duration-150 ease-in-out border text-input text-xs lg:text-sm font-body placeholder-body min-h-12 transition duration-200 ease-in-out bg-white border-gray-300 focus:outline-none focus:border-heading h-11 md:h-12 rounded-md"
-              autoComplete="off"
-              spellCheck="false"
-              aria-invalid="false"
+           
             />
           </div>
           <div className="relative mb-4">
