@@ -19,7 +19,7 @@ const authService = createApi({
            userRegister: builder.mutation({
             query: data => {
                 return {
-                    url: '/register',
+                    url: '/CustomerRegister',
                     method: 'POST',
                     body: data
                 }
@@ -28,7 +28,7 @@ const authService = createApi({
            userLogin: builder.mutation({
             query: loginData => {
                 return {
-                    url: '/login',
+                    url: '/customerLogin',
                     method: 'POST',
                     body: loginData
                 }
