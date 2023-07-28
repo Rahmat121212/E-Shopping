@@ -34,6 +34,7 @@ const ContactUs = () => {
     e.preventDefault();
     data(state)
     console.log("state ===>" ,state);
+  
   }
   useEffect(() => {
     if (!response.isSuccess) {
@@ -46,11 +47,9 @@ const ContactUs = () => {
   const navigate = useNavigate();
   useEffect(() => {
     if (response?.isSuccess) {
-     
-      
         toast.success(response?.data?.msg);
-     
-      navigate("/contact");
+    
+      
     }
   }, [response?.isSuccess]);
   const [side, setSide] = useState('-left-[300px]')
@@ -245,8 +244,7 @@ const ContactUs = () => {
               value={state.message}
               onChange={inputHandle}
               className="px-4 py-3 flex items-center w-full rounded appearance-none transition duration-300 ease-in-out text-heading text-sm focus:outline-none focus:ring-0 bg-white border border-gray-300 focus:shadow focus:outline-none focus:border-heading placeholder-body"
-              autoComplete="off"
-              spellCheck="false"
+
               rows={4}
               placeholder="Write your message here"
               defaultValue={""}

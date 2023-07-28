@@ -34,6 +34,8 @@ import CatProductsBrand from "../screens/home/CatProductsBrand";
 import AboutUs from "../screens/home/AboutUs";
 import ContactUs from "../screens/home/ContactUs";
 import FeedBack from "../screens/dashboard/FeedBack";
+import Not_Found_Page from "../components/Not_Found_Page";
+import Admin_NOT_Found_Page from "../components/Admin_NOT_Found_Page";
 // import Dashboard from "../screens/dashboard/Dashboard";
 
 const Routing = () => {
@@ -62,6 +64,7 @@ const Routing = () => {
           <Route path="orders" element={<UserOrders />} />
           <Route path="orders/:page" element={<UserOrders />} />
           <Route path="user-order-details/:id" element={<UserOrderDetails />} />
+          
         </Route>
         
         <Route path="auth">
@@ -242,7 +245,9 @@ const Routing = () => {
           <Route path="orders" element={<Orders />} />
           <Route path="orders/:page" element={<Orders />} />
           <Route path="order-details/:id" element={<OrderDetails />} />
+          <Route path="*" element={<Admin_NOT_Found_Page/>}  />
         </Route>
+       
       </Routes>
     </BrowserRouter>
   );
