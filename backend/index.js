@@ -28,7 +28,7 @@ app.post(
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.json({ msg: "Welcome to chawkbazar" });
+  res.json({ msg: "Welcome to E-Shopping" });
 });
 // user routes
 app.use("/api", userRoutes);
