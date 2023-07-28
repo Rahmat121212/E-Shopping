@@ -42,7 +42,7 @@ const handleInput = (e) => {
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/flex" className="btn-dark">
+        <Link to="/dashboard/flex" className="btn-dark rounded-xl">
           <i className="bi bi-arrow-left-short"></i>Flex list
         </Link>
       </ScreenHeader>

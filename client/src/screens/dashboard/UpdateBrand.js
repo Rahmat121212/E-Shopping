@@ -31,7 +31,7 @@ const UpdateBrand = () => {
     return(
        <Wrapper>
            <ScreenHeader>
-              <Link to="/dashboard/brand" className="btn-dark"><i className="bi bi-arrow-left-short"></i> Brand list</Link>
+              <Link to="/dashboard/brand" className="btn-dark rounded-xl"><i className="bi bi-arrow-left-short"></i> Brand list</Link>
            </ScreenHeader>
            {!isFetching ? <form className="w-full md:w-8/12" onSubmit={updateSubmit}>
                <h3 className="text-lg capitalize mb-3">Update Brand</h3>

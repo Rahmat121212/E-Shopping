@@ -35,7 +35,7 @@ const Categories = () => {
     return(
        <Wrapper>
            <ScreenHeader>
-              <Link to="/dashboard/create-category" className="btn-dark">add categories <i className="bi bi-plus"></i></Link>
+              <Link to="/dashboard/create-category" className="btn-dark rounded-xl">add categories <i className="bi bi-plus"></i></Link>
            </ScreenHeader>
            {success && <div className="alert-success">{success}</div>}
            {!isFetching ? data?.categories?.length > 0 && <><div>

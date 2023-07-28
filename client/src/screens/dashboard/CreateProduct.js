@@ -115,7 +115,7 @@ const CreateProduct = () => {
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/products" className="btn-dark">
+        <Link to="/dashboard/products" className="btn-dark rounded-xl">
           <i className="bi bi-arrow-left-short"></i> proudcts list
         </Link>
       </ScreenHeader>

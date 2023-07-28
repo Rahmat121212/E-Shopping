@@ -1,5 +1,6 @@
 import React from 'react'
 import { useAllFlexsQuery } from '../../store/services/flexService';
+import Spinner from "../../components/Spinner"
 const Flex = () => {
   const { data, isFetching } = useAllFlexsQuery();
   if (!isFetching) {
@@ -34,9 +35,8 @@ const Flex = () => {
     (data?.categories?.length > 0 ? (
       <div className="mb-5 md:mb-14 xl:mb-8 px-2.5 grid grid-cols-2 sm:grid-cols-9 gap-2 md:gap-2.5 max-w-[1920px] mx-auto">
         <div className="mx-auto col-span-full sm:col-span-5">
-          <a
+          <div
             className="h-full group flex justify-center relative overflow-hidden"
-            href="/collections/mens-collection"
           >
             <span
               style={{
@@ -112,12 +112,11 @@ const Flex = () => {
               />
             </span>
            
-          </a>
+          </div>
         </div>
         <div className="mx-auto col-span-1 sm:col-span-2">
-          <a
+          <div
             className="h-full group flex justify-center relative overflow-hidden"
-            href="/collections/new-sports"
           >
             <span
               style={{
@@ -151,7 +150,7 @@ const Flex = () => {
               >
                 <img
                   style={{
-                    display: "block",
+                    display: "Flex 3",
                     maxWidth: "100%",
                     width: "initial",
                     height: "initial",
@@ -167,7 +166,7 @@ const Flex = () => {
                 />
               </span>
               <img
-                alt="New Sports"
+                alt="Flex 2"
                 src={`${flexData.image2}`}
                 decoding="async"
                 data-nimg="intrinsic"
@@ -193,12 +192,11 @@ const Flex = () => {
               />
             </span>
            
-          </a>
+          </div>
         </div>
         <div className="mx-auto col-span-1 sm:col-span-2">
-          <a
+          <div
             className="h-full group flex justify-center relative overflow-hidden"
-            href="/collections/dress-women"
           >
             <span
               style={{
@@ -248,7 +246,7 @@ const Flex = () => {
                 />
               </span>
               <img
-                alt="Dress Women"
+                alt="Flex 3"
                 src={`${flexData.image3}`}
                 decoding="async"
                 data-nimg="intrinsic"
@@ -273,12 +271,11 @@ const Flex = () => {
                 }}
               />
             </span>
-            </a>
+            </div>
         </div>
         <div className="mx-auto col-span-1 sm:col-span-2">
-          <a
+          <div
             className="h-full group flex justify-center relative overflow-hidden"
-            href="/collections/exclusive-sunglasses"
           >
             <span
               style={{
@@ -328,7 +325,7 @@ const Flex = () => {
                 />
               </span>
               <img
-                alt="Exclusive Sunglasses"
+                alt="Flex 4"
                 src={`${flexData.image4}`}
                 decoding="async"
                 data-nimg="intrinsic"
@@ -352,12 +349,11 @@ const Flex = () => {
                   maxHeight: "100%",
                 }}
               />
-            </span></a>
+            </span></div>
         </div>
         <div className="mx-auto col-span-1 sm:col-span-2">
-          <a
+          <div
             className="h-full group flex justify-center relative overflow-hidden"
-            href="/collections/product-coupons"
           >
             <span
               style={{
@@ -407,7 +403,7 @@ const Flex = () => {
                 />
               </span>
               <img
-                alt="Product Coupons"
+                alt="Flex 5"
                 src={`${flexData.image5}`}
                 decoding="async"
                 data-nimg="intrinsic"
@@ -431,12 +427,11 @@ const Flex = () => {
                   maxHeight: "100%",
                 }}
               />
-            </span></a>
+            </span></div>
         </div>
         <div className="mx-auto col-span-full sm:col-span-5">
-          <a
+          <div
             className="h-full group flex justify-center relative overflow-hidden"
-            href="/collections/new-backpack"
           >
             <span
               style={{
@@ -486,7 +481,7 @@ const Flex = () => {
                 />
               </span>
               <img
-                alt="New Backpack"
+                alt="Flex 6"
                 src={`${flexData.image6}`}
                 decoding="async"
                 data-nimg="intrinsic"
@@ -510,11 +505,13 @@ const Flex = () => {
                   maxHeight: "100%",
                 }}
               />
-            </span></a>
+            </span></div>
         </div>
       </div>
     ) : (
-      <p>Loading...</p>
+      <div className="my-container h-[70vh] flex items-center justify-center">
+      <Spinner />
+    </div>
     ))}
   {/* flex end here 1*/}
   </>

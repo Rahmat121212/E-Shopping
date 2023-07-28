@@ -38,7 +38,7 @@ const Flex = () => {
     return(
        <Wrapper>
            <ScreenHeader>
-              <Link to="/dashboard/create-flex" className="btn-dark">add Flex <i className="bi bi-plus"></i></Link>
+              <Link to="/dashboard/create-flex" className="btn-dark rounded-xl">add Flex <i className="bi bi-plus"></i></Link>
            </ScreenHeader>
            {success && <div className="alert-success">{success}</div>}
            {!isFetching ? data?.flex?.length > 0 && <><div>

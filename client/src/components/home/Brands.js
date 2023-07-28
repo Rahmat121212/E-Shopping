@@ -1,5 +1,7 @@
 import React from 'react'
 import { useAllBrandsQuery } from '../../store/services/brandService'
+import Spinner from '../Spinner';
+import { Link } from 'react-router-dom';
 
 const Brands = () => {
    const {data,isFetching}= useAllBrandsQuery();
@@ -16,9 +18,9 @@ const Brands = () => {
     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 md:gap-3 lg:gap-5 xl:gap-7">
       {
         data?.brands?.length > 0 && data?.brands?.map((brand,index)=>(
-          <a
+          <Link
         className="group flex justify-center text-center relative overflow-hidden rounded-md"
-        href="/search?brand=fashnetic"
+        to={`/cat-productsBrand/${brand.name}`}
       >
         <span
           style={{
@@ -74,11 +76,15 @@ const Brands = () => {
         
         <div className="absolute top left bg-black w-full h-full opacity-50 transition-opacity duration-500 group-hover:opacity-80" ></div>
         
-      </a>
+      </Link>
         ))
       }
     </div>
-</div>) : ("Loading....")
+</div>) : (
+   <div className="my-container h-[40vh] flex items-center justify-center">
+   <Spinner />
+ </div>
+)
    }
    </>
   )

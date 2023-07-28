@@ -35,7 +35,7 @@ const Brand = () => {
     return(
        <Wrapper>
            <ScreenHeader>
-              <Link to="/dashboard/create-brand" className="btn-dark">add Brand <i className="bi bi-plus"></i></Link>
+              <Link to="/dashboard/create-brand" className="btn-dark rounded-xl">add Brand <i className="bi bi-plus"></i></Link>
            </ScreenHeader>
            {success && <div className="alert-success">{success}</div>}
            {!isFetching ? data?.brand?.length > 0 && <><div>

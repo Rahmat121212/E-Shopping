@@ -40,7 +40,7 @@ const handleInput = (e) => {
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/brand" className="btn-dark">
+        <Link to="/dashboard/brand" className="btn-dark rounded-xl">
           <i className="bi bi-arrow-left-short"></i>Brand list
         </Link>
       </ScreenHeader>

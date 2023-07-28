@@ -35,7 +35,7 @@ const Products = () => {
     return(
        <Wrapper>
          <ScreenHeader>
-          <Link to="/dashboard/create-product" className="btn-dark">create product</Link>
+          <Link to="/dashboard/create-product" className="btn-dark rounded-xl">create product</Link>
           <Toaster position="top-right" />
           </ScreenHeader>
           {!isFetching ? data?.products?.length > 0 ? <div>

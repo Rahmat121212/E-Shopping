@@ -40,7 +40,7 @@ const handleInput = (e) => {
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/categories" className="btn-dark">
+        <Link to="/dashboard/categories" className="btn-dark rounded-xl">
           <i className="bi bi-arrow-left-short"></i> categories list
         </Link>
       </ScreenHeader>
