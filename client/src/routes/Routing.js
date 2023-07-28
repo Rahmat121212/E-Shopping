@@ -36,6 +36,10 @@ import ContactUs from "../screens/home/ContactUs";
 import FeedBack from "../screens/dashboard/FeedBack";
 import Not_Found_Page from "../components/Not_Found_Page";
 import Admin_NOT_Found_Page from "../components/Admin_NOT_Found_Page";
+import Admin from "../screens/dashboard/Admin";
+import CreateAdmin from "../screens/dashboard/CreateAdmin";
+import Customer from "../screens/dashboard/Customer";
+import UpdateCategoryImage from "../screens/dashboard/UpdateCategoryImage";
 // import Dashboard from "../screens/dashboard/Dashboard";
 
 const Routing = () => {
@@ -87,19 +91,68 @@ const Routing = () => {
               </Private>
             }
           />
-          <Route
-            path="flex/:page"
-            element={
-              <Private>
-                <Flex />
-              </Private>
-            }
-          />
+         
           <Route
             path="feedback"
             element={
               <Private>
                 <FeedBack />
+              </Private>
+            }
+          />
+          <Route
+            path="feedback/:page"
+            element={
+              <Private>
+                <FeedBack />
+              </Private>
+            }
+          />
+           <Route
+            path="admin/:page"
+            element={
+              <Private>
+                <Admin />
+              </Private>
+            }
+          />
+          <Route
+            path="admin"
+            element={
+              <Private>
+                <Admin />
+              </Private>
+            }
+          />
+           <Route
+            path="customer/:page"
+            element={
+              <Private>
+                <Customer />
+              </Private>
+            }
+          />
+          <Route
+            path="customer"
+            element={
+              <Private>
+                <Customer />
+              </Private>
+            }
+          />
+          <Route
+            path="create-admin"
+            element={
+              <Private>
+                <CreateAdmin />
+              </Private>
+            }
+          />
+           <Route
+            path="flex/:page"
+            element={
+              <Private>
+                <Flex />
               </Private>
             }
           />
@@ -182,6 +235,14 @@ const Routing = () => {
             element={
               <Private>
                 <UpdateCategory />
+              </Private>
+            }
+          />
+          <Route
+            path="update-image-category/:id"
+            element={
+              <Private>
+                <UpdateCategoryImage />
               </Private>
             }
           />

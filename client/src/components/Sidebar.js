@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { CgDisplayFlex } from 'react-icons/cg';
 import { TbBrandAirbnb } from 'react-icons/tb';
 import { VscFeedback } from 'react-icons/vsc';
+import { RiAdminLine } from 'react-icons/ri';
 const Sidebar = ({ side, closeSidebar }) => {
   return (
     <div
@@ -16,6 +17,12 @@ const Sidebar = ({ side, closeSidebar }) => {
      
       <ul className="mt-4">
         <li className="px-4 cursor-pointer transition-all py-3 text-white flex items-center hover:bg-gray-600">
+         <RiAdminLine className="mr-2 inline-block text-lg  "  />
+          <Link to="/dashboard/admin" className="text-base capitalize">
+            Manage Admin's
+          </Link>
+        </li>
+        <li className="px-4 cursor-pointer transition-all py-3 text-white flex items-center hover:bg-gray-600">
           <i className="bi bi-card-list mr-2 inline-block text-lg"></i>
           <Link to="/dashboard/products" className="text-base capitalize">
             products
@@ -29,7 +36,7 @@ const Sidebar = ({ side, closeSidebar }) => {
         </li>
         <li className="px-4 cursor-pointer transition-all py-3 text-white flex items-center hover:bg-gray-600">
           <i className="bi bi-people-fill mr-2 inline-block text-lg"></i>
-          <Link to="/dashboard/products" className="text-base capitalize">
+          <Link to="/dashboard/customer" className="text-base capitalize">
             customers
           </Link>
         </li>

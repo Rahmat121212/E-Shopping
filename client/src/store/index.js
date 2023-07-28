@@ -38,7 +38,8 @@ const Store = configureStore({
       userOrdersService.middleware,
       flexService.middleware,
       feedbackService.middleware,
-      brandService.middleware
+      brandService.middleware,
+      authService.middleware
     ]),
 });
 export default Store;

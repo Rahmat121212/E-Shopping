@@ -11,7 +11,6 @@ class Category {
       console.log("fields--------->", files);
       if (!err) {
         const parsedData = JSON.parse(fields.data);
-
         const errors = [];
         if (errors.length === 0) {
           const { name } = JSON.parse(fields.data);
@@ -76,6 +75,67 @@ class Category {
       }
     });
   }
+  // async imageUpdate(req, res) {
+  //   const form = formidable({ multiples: true });
+  //   form.parse(req, async (err, fields, files) => {
+  //     console.log("fields--------->", files);
+  //     if (!err) {
+  //       const parsedData = JSON.parse(fields.data);
+  //       const errors = [];
+  //       if (errors.length === 0) {
+  //         if (!files["image"]) {
+  //           errors.push({ msg: "Image is required" });
+  //         }
+  //         if (errors.length === 0) {
+  //           const images = {};
+  //           const mimeType = files[`image`].mimetype;
+  //           const extension = mimeType.split("/")[1].toLowerCase();
+  //           if (
+  //             extension === "jpeg" ||
+  //             extension === "jpg" ||
+  //             extension === "png"
+  //           ) {
+  //             const imageName = uuidv4() + `.${extension}`;
+  //             const __dirname = path.resolve();
+  //             const newPath =
+  //               __dirname + `/../client/public/uploads/${imageName}`;
+  //             images[`image`] = imageName;
+  //             fs.copyFile(files[`image`].filepath, newPath, (err) => {
+  //               if (err) {
+  //                 console.log(err);
+  //               }
+  //             });
+  //           } else {
+  //             const error = {};
+  //             error["msg"] = `image has invalid ${extension} type`;
+  //             errors.push(error);
+  //           }
+  //           // }
+  //           if (errors.length === 0) {
+  //             try {
+  //               const response = await CategoryModel.create({
+  //                 name: parsedData.name,
+  //                 image: images["image"],
+  //               });
+  //               return res
+  //                 .status(201)
+  //                 .json({ msg: "Category has created", response });
+  //             } catch (error) {
+  //               console.log(error);
+  //               return res.status(500).json(error);
+  //             }
+  //           } else {
+  //             return res.status(400).json({ errors });
+  //           }
+  //         } else {
+  //           return res.status(400).json({ errors });
+  //         }
+  //       } else {
+  //         return res.status(400).json({ errors });
+  //       }
+  //     }
+  //   });
+  // }
 
   async categories(req, res) {
     const page = req.params.page;

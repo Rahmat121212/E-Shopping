@@ -27,7 +27,7 @@ class FeedBack {
     }
     async getData(req, res) {
         const page = req.params.page;
-        const perPage = 5;
+        const perPage = 7;
         const skip = (page - 1) * perPage;
     
         try {
