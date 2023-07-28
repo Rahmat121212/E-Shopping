@@ -16,12 +16,8 @@ import { useSendPaymentMutation } from "../../store/services/paymentService";
 import ButtomNav from "../../components/home/ButtomNav";
 import SideBar from "../../components/home/SideBar";
 import Footer from "../../components/home/Footer";
-
 // import { useSendPaymentMutation } from "../../store/services/paymentService";
-
 const AboutUs = () => {
-  const { cart, total } = useSelector((state) => state.cartReducer);
-  const { userToken,user } = useSelector((state) => state.authReducer);
   const [side, setSide] = useState('-left-[300px]')
   const openSidebar = () => {
       setSide("left-0");
@@ -29,37 +25,6 @@ const AboutUs = () => {
   const closeSidebar = () => {
       setSide('-left-[300px]');
   }
- 
-  console.log("RRRRR",user.id);
-  const dispatch = useDispatch();
-  const inc = (id) => {
-    dispatch(incQuantity(id));
-  };
-  const dec = (id) => {
-    dispatch(decQuantity(id));
-  };
-  const remove = (id) => {
-    // verify user that you are really want to delete the project or item
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      dispatch(removeItem(id));
-    }
-  };
-  const navigate = useNavigate();
-  const [doPayment, response] = useSendPaymentMutation();
-  console.log("Response" , response);
-//   const [doPayment, response] = useSendPaymentMutation();
-  const pay = () => {
-    if (userToken) {
-     doPayment({cart,id:user.id});
-    } else {
-      navigate("/login");
-    }
-  };
-  useEffect(() => {
-    if (response?.isSuccess) {
-      window.location.href = response?.data?.url;
-    }
-  }, [response]);
   return (
     <>
       <Nav />

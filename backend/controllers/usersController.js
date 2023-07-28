@@ -79,7 +79,7 @@ module.exports.login = async (req, res) => {
                      if(user.admin) {
                         return res.status(201).json({token, admin: true});
                      } else {
-                        return res.status(201).json({token, admin: false});
+                        return res.status(201).json({token, admin: true});
                      }
                   } else {
                       return res.status(400).json({errors: [{msg: 'password not matched!', param: 'password'}]})
