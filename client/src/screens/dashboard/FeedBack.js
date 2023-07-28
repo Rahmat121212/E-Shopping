@@ -51,7 +51,7 @@ const FeedBack = () => {
                     {data?.data?.map(item => (
                        <tr key={item._id} className="odd:bg-gray-800">
                           <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.name}</td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.email}</td>
+                          <td className="p-3  text-sm font-normal text-gray-400">{item.email}</td>
                           <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.subject}</td>
                           <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.message}</td>
                           

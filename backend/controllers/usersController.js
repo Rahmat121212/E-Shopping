@@ -1,6 +1,7 @@
 const {validationResult} = require("express-validator");
 const UserModel = require("../models/User");
 const {hashedPassword, createToken,comparePassword} = require("../services/authServices");
+const CustomerModel = require("../models/Customer");
 
 // @route POST /api/register
 // @access Public
@@ -14,6 +15,34 @@ module.exports.register = async (req, res) => {
             if(!emailExist) {
                 const hashed = await hashedPassword(password);
                 const user = await UserModel.create({
+                    name,
+                    email,
+                    password: hashed
+                });
+                const token = createToken({id: user._id, name: user.name});
+                return res.status(201).json({msg: 'Your account has been created!', token});
+            } else {
+                // email already taken
+                return res.status(400).json({errors: [{msg: `${email} is already taken`, param: 'email'}]})
+            }
+        } catch (error) {
+            console.log(error.message);
+            return res.status(500).json("Server internal error!");
+        }
+    } else {
+        // validations failed
+        return res.status(400).json({errors: errors.array()})
+    }
+}
+module.exports.registerCustomer = async (req, res) => {
+    const errors = validationResult(req);
+    if(errors.isEmpty()){
+        const {name, email, password} = req.body;
+        try {
+            const emailExist = await CustomerModel.findOne({email});
+            if(!emailExist) {
+                const hashed = await hashedPassword(password);
+                const user = await CustomerModel.create({
                     name,
                     email,
                     password: hashed
@@ -51,6 +80,35 @@ module.exports.login = async (req, res) => {
                         return res.status(201).json({token, admin: true});
                      } else {
                         return res.status(201).json({token, admin: false});
+                     }
+                  } else {
+                      return res.status(400).json({errors: [{msg: 'password not matched!', param: 'password'}]})
+                  }
+             } else {
+                 return res.status(400).json({errors: [{msg: `${email} is not found!`, param: 'email'}]});
+             }
+         } catch (error) {
+             console.log(error.message)
+             return res.status(500).json('Server internal error!');
+         }
+     } else {
+        //  validations failed
+        return res.status(400).json({errors: errors.array()})
+     }
+}
+module.exports.loginCustomer = async (req, res) => {
+     const {email, password} = req.body;
+     const errors = validationResult(req);
+     if(errors.isEmpty()) {
+         try {
+             const user = await CustomerModel.findOne({email});
+             if(user) {
+                  if(await comparePassword(password, user.password)) {
+                     const token = createToken({id: user._id, name: user.name});
+                     if(user.admin) {
+                        return res.status(201).json({token});
+                     } else {
+                        return res.status(201).json({token});
                      }
                   } else {
                       return res.status(400).json({errors: [{msg: 'password not matched!', param: 'password'}]})

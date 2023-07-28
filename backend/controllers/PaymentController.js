@@ -1,14 +1,16 @@
 
+const CustomerModel = require('../models/Customer');
 const OrderModel = require('../models/OrderModel');
 const ProductModel = require('../models/ProductModel');
 const UserModel = require("../models/User");
+
 require('dotenv').config();
 const stripe = require('stripe')(process.env.STRIPE_KEY )
 class PaymentController {
     async paymentProcess (req, res){
         const {cart,id} =  req.body;
         console.log("ID",id);
-        const user = await UserModel.findOne({_id:id});
+        const user = await CustomerModel.findOne({_id:id});
         console.log("Use",user);
         const orderData = cart.map((item) => {
           return {
