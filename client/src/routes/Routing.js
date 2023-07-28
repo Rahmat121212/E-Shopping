@@ -66,7 +66,7 @@ const Routing = () => {
           <Route path="user-order-details/:id" element={<UserOrderDetails />} />
           
         </Route>
-        
+        <Route path="*" element={<Not_Found_Page/>}  />
         <Route path="auth">
           <Route
             path="admin-login"
