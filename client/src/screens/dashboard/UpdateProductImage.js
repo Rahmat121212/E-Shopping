@@ -51,14 +51,14 @@ console.log("Image",state);
   useEffect(() => {
     if (response?.isSuccess) {
       dispatch(setSuccess(response?.data?.msg));
-      navigate("/dashboard/product");
+      navigate("/dashboard/products");
     }
   }, [response?.isSuccess]);
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/product" className="btn-dark rounded-xl">
-          <i className="bi bi-arrow-left-short"></i> Flex list
+        <Link to="/dashboard/products" className="btn-dark rounded-xl">
+          <i className="bi bi-arrow-left-short"></i> Product list
         </Link>
       </ScreenHeader>
       <div className="flex flex-wrap -mx-3">

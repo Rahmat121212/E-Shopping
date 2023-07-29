@@ -54,7 +54,7 @@ const Admin = () => {
                     {data?.admin?.map(item => (
                        <tr key={item._id} className="odd:bg-gray-800">
                           <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.name}</td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.email}</td>
+                          <td className="p-3  text-sm font-normal text-gray-400">{item.email}</td>
                           <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/${item._id}`} className="btn btn-warning">edit</Link></td>
                           <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard//${item._id}`} className="btn btn-warning">edit</Link></td>
                           <td className="p-3 capitalize text-sm font-normal text-gray-400"><button className="btn btn-danger" onClick={() => deleteCat(item._id)}>delete</button></td>

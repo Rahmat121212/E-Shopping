@@ -20,6 +20,7 @@ import SizesList from "../../components/SizesList";
 import { setSuccess } from "../../store/reducers/globalReducer";
 import { useAllBrandsQuery } from "../../store/services/brandService";
 
+
 const EditProduct = () => {
   const { id } = useParams();
   const { data: product, isFetching: fetching } = useGetProductQuery(id);
@@ -106,7 +107,7 @@ const EditProduct = () => {
     if (!fetching) {
       setState(product);
       setSizeList(product.sizes);
-      setValue(h2p(product.description));
+      setValue(h2p(h2p(product.description)));
     }
   }, [product]);
   console.log("your state: ", state);
