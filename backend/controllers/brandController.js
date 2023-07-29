@@ -80,7 +80,66 @@ class Brands {
           }
         });
       }
-    
+      async imageUpdate(req, res) {
+        const form = formidable({ multiples: true });
+        form.parse(req, async (err, fields, files) => {
+          console.log("fgggggggg--------->", fields?.id);
+          if (!err) {
+            const errors = [];
+            if (errors.length === 0) {
+              if (!files["image"]) {
+                errors.push({ msg: "Image is required" });
+              }
+              if (errors.length === 0) {
+                const images = {};
+                const mimeType = files[`image`].mimetype;
+                const extension = mimeType.split("/")[1].toLowerCase();
+                if (
+                  extension === "jpeg" ||
+                  extension === "jpg" ||
+                  extension === "png"
+                ) {
+                  const imageName = uuidv4() + `.${extension}`;
+                  const __dirname = path.resolve();
+                  const newPath =
+                    __dirname + `/../client/public/uploads/brand/${imageName}`;
+                  images[`image`] = imageName;
+                  fs.copyFile(files[`image`].filepath, newPath, (err) => {
+                    if (err) {
+                      console.log(err);
+                    }
+                  });
+                } else {
+                  const error = {};
+                  error["msg"] = `image has invalid ${extension} type`;
+                  errors.push(error);
+                }
+                // }
+                if (errors.length === 0) {
+                  try {
+                    const response = await BrandDB.updateOne(
+                      { _id: fields?.id },
+                      { $set: { image: images["image"]}}
+                      );
+                    return res
+                      .status(201)
+                      .json({ msg: "Brand Image has Updated !", response });
+                  } catch (error) {
+                    console.log(error);
+                    return res.status(500).json(error);
+                  }
+                } else {
+                  return res.status(400).json({ errors });
+                }
+              } else {
+                return res.status(400).json({ errors });
+              }
+            } else {
+              return res.status(400).json({ errors });
+            }
+          }
+        });
+      }
       async getBrand(req, res) {
         const page = req.params.page;
         const perPage = 3;
@@ -112,71 +171,7 @@ class Brands {
         }
       }
     
-      async updateBrandimage(req, res) {
-        const { id } = req.params;
-        const form = formidable({ multiples: true });
-        form.parse(req, async (err, fields, files) => {
-          console.log("fields----------->", fields);
-          if (!err) {
-            const errors = [];
-            if (errors.length === 0) {
-              
-              if (!files["image"]) {
-                errors.push({ msg: "Image is required" });
-              }
-              
-              if (errors.length === 0) {
-                const images = {};
-    
-                const mimeType = files[`image`].mimetype;
-                const extension = mimeType.split("/")[1].toLowerCase();
-                if (
-                  extension === "jpeg" ||
-                  extension === "jpg" ||
-                  extension === "png"
-                ) {
-                  const imageName = uuidv4() + `.${extension}`;
-                  const __dirname = path.resolve();
-                  const newPath =
-                    __dirname + `/../client/public/uploads/brand/${imageName}`;
-                  images[`image`] = imageName;
-                  fs.copyFile(files[`image`].filepath, newPath, (err) => {
-                    if (err) {
-                      console.log(err);
-                    }
-                  });
-                } else {
-                  const error = {};
-                  error["msg"] = `image has invalid ${extension} type`;
-                  errors.push(error);
-                }
-    
-                if (errors.length === 0) {
-                  try {
-                    const { url } = JSON.parse(fields.data);
-                    const response = await BrandDB.updateOne(
-                      { _id: id },
-                      { $set: { image } }
-                      );
-                    return res
-                      .status(201)
-                      .json({ msg: "Brand Image Updated !", response });
-                  } catch (error) {
-                    console.log(error);
-                    return res.status(500).json(error);
-                  }
-                } else {
-                  return res.status(400).json({ errors });
-                }
-              } else {
-                return res.status(400).json({ errors });
-              }
-            } else {
-              return res.status(400).json({ errors });
-            }
-          }
-        });
-      }
+     
     
     
       async updateBrand(req, res) {

@@ -40,6 +40,8 @@ import Admin from "../screens/dashboard/Admin";
 import CreateAdmin from "../screens/dashboard/CreateAdmin";
 import Customer from "../screens/dashboard/Customer";
 import UpdateCategoryImage from "../screens/dashboard/UpdateCategoryImage";
+import UpdateFlexImage from "../screens/dashboard/UpdateFlexImage";
+import UpdateProductImage from "../screens/dashboard/UpdateProductImage";
 // import Dashboard from "../screens/dashboard/Dashboard";
 
 const Routing = () => {
@@ -183,6 +185,14 @@ const Routing = () => {
             }
           />
           <Route
+            path="update-flex-image/:id"
+            element={
+              <Private>
+                <UpdateFlexImage />
+              </Private>
+            }
+          />
+          <Route
             path="products"
             element={
               <Private>
@@ -203,6 +213,14 @@ const Routing = () => {
             element={
               <Private>
                 <EditProduct />
+              </Private>
+            }
+          />
+          <Route
+            path="edit-product-image/:id"
+            element={
+              <Private>
+                <UpdateProductImage />
               </Private>
             }
           />

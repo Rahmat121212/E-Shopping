@@ -38,7 +38,7 @@ const brandService = createApi({
       updateBrandImage: builder.mutation({
         query: (data) => {
           return {
-            url: `brand-image/${data.id}`,
+            url: `update-brand-image`,
             method: "PUT",
             body: data,
           };

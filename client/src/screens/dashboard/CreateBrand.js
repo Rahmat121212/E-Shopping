@@ -33,7 +33,7 @@ const handleInput = (e) => {
   const dispatch = useDispatch();
   useEffect(() => {
     if (data?.isSuccess) {
-      dispatch(setSuccess(data?.data?.message));
+      dispatch(setSuccess(data?.data?.msg));
       navigate("/dashboard/brand");
     }
   }, [data?.isSuccess]);

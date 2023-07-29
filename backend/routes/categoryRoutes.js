@@ -14,6 +14,10 @@ router.put(
   [categoryValidations, Authorization.authorized],
   Category.updateCategory
 );
+router.put(
+  "/update-category-image",
+  Category.imageUpdate
+);
 router.delete(
   "/delete-category/:id",
   Authorization.authorized,

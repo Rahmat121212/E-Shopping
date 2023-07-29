@@ -28,9 +28,19 @@ const flexService = createApi({
       updateFlex: builder.mutation({
         query: (data) => {
           return {
-            url: `flex-update/${data.id}`,
+            url: `flex-update`,
             method: "PUT",
-            body: data,
+            body: data
+          };
+        },
+        invalidatesTags: ["flexs"],
+      }),
+      updateFlexImage: builder.mutation({
+        query: (data) => {
+          return {
+            url: `flex-update-image`,
+            method: "PUT",
+            body: data
           };
         },
         invalidatesTags: ["flexs"],
@@ -90,6 +100,7 @@ export const {
   useAllFlexsQuery,
   useRandomFlexsQuery,
   useUpdateFlexMutation,
+  useUpdateFlexImageMutation,
   useDeleteFlexMutation,
 } = flexService;
 

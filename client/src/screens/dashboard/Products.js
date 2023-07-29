@@ -47,6 +47,7 @@ const Products = () => {
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">stock</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">image</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">edit</th>
+                       <th className="p-3 uppercase text-sm font-medium text-gray-500">edit Image</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">delete</th>
                     </tr>
                  </thead>
@@ -60,6 +61,7 @@ const Products = () => {
                            <img src={`/images/${product.image1}`} alt="image name" className="w-20 h-20 rounded-md object-cover" />
                         </td>
                         <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/edit-product/${product._id}`} className="btn btn-warning">edit</Link></td>
+                        <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/edit-product-image/${product._id}`} className="btn btn-warning">edit Image</Link></td>
                         <td className="p-3 capitalize text-sm font-normal text-gray-400"><span className="btn btn-danger cursor-pointer" onClick={() => deleteProduct(product._id)}>delete</span></td>
                      </tr>
                   ))}

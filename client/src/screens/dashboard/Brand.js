@@ -44,8 +44,8 @@ const Brand = () => {
                     <tr className="border-b border-gray-800 text-left">
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">name</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">Image</th>
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">edit Image</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">edit</th>
+                       <th className="p-3 uppercase text-sm font-medium text-gray-500">edit Image</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">delete</th>
                     </tr>
                  </thead>
@@ -56,8 +56,9 @@ const Brand = () => {
                           <td className="p-3 capitalize text-sm font-normal text-gray-400">
                            <img src={`/uploads/brand/${brand.image}`} alt="image name" className="w-20 h-20 rounded-md object-cover" />
                         </td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/update-brand-image/${brand._id}`} className="btn btn-warning">edit</Link></td>
+                          
                           <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/update-brand/${brand._id}`} className="btn btn-warning">edit</Link></td>
+                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/update-brand-image/${brand._id}`} className="btn btn-warning">edit Image</Link></td>
                           <td className="p-3 capitalize text-sm font-normal text-gray-400"><button className="btn btn-danger" onClick={() => deleteCat(brand._id)}>delete</button></td>
                        </tr>
                     ))}

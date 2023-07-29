@@ -6,11 +6,12 @@ import Wrapper from "./Wrapper";
 import { useCreateMutation, useFetchCategoryQuery, useUpdateCategoryImageMutation } from "../../store/services/categoryService";
 import { setSuccess } from "../../store/reducers/globalReducer";
 import ImagesPreview from "../../components/ImagesPreview";
-const UpdateCategoryImage = () => {
+import { useFetchFlexQuery, useUpdateFlexImageMutation } from "../../store/services/flexService";
+const UpdateFlexImage = () => {
   const {id} = useParams();
   console.log("id,.,.",id);
-  const {data:cate, isFetching} = useFetchCategoryQuery(id);
-    console.log('category data: ',cate?.category?.image)
+  const {data:cate, isFetching} = useFetchFlexQuery(id);
+    console.log('flex data: ',cate?.flex?.image)
   const [state, setState] = useState({
     image :""
   });
@@ -28,7 +29,7 @@ const imageHandle = (e) => {
   }
 };
 console.log("Image",state);
-  const [saveCategory, response] = useUpdateCategoryImageMutation();
+  const [saveCategory, response] = useUpdateFlexImageMutation();
   console.log(">>>",response?.error?.data?.errors[0] );
   const errors = response?.error?.data?.errors ? response?.error?.data?.errors : [];
   const createPro = (e) => {
@@ -43,14 +44,14 @@ console.log("Image",state);
   useEffect(() => {
     if (response?.isSuccess) {
       dispatch(setSuccess(response?.data?.msg));
-      navigate("/dashboard/categories");
+      navigate("/dashboard/flex");
     }
   }, [response?.isSuccess]);
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/categories" className="btn-dark rounded-xl">
-          <i className="bi bi-arrow-left-short"></i> categories list
+        <Link to="/dashboard/flex" className="btn-dark rounded-xl">
+          <i className="bi bi-arrow-left-short"></i> Flex list
         </Link>
       </ScreenHeader>
       <div className="flex flex-wrap -mx-3">
@@ -81,11 +82,11 @@ console.log("Image",state);
           </div>
         </form>
         <div className="w-full xl:w-4/12 p-3">
-          <ImagesPreview url={`/uploads/${cate?.category?.image}`} heading="Previous Image" />
+          <ImagesPreview url={`/uploads/flexs/${cate?.flex?.image}`} heading="Previous Image" />
           <ImagesPreview url={preview.image} heading="New image" />
         </div>
       </div>
     </Wrapper>
   );
 };
-export default UpdateCategoryImage;
+export default UpdateFlexImage;

@@ -35,6 +35,16 @@ const categoryService = createApi({
         },
         invalidatesTags: ["categories"],
       }),
+      updateCategoryImage: builder.mutation({
+        query: (data) => {
+          return {
+            url: `update-category-image`,
+            method: "PUT",
+            body: data
+          };
+        },
+        invalidatesTags: ["categories"],
+      }),
       deleteCategory: builder.mutation({
         query: (id) => {
           return {
@@ -90,6 +100,7 @@ export const {
   useAllCategoriesQuery,
   useRandomCategoriesQuery,
   useUpdateCategoryMutation,
+  useUpdateCategoryImageMutation,
   useDeleteCategoryMutation,
 } = categoryService;
 export default categoryService;

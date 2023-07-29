@@ -64,7 +64,67 @@ class FlexController {
                 });
                 return res
                   .status(201)
-                  .json({ msg: "flexDB has been created", response });
+                  .json({ msg: "flex has been created", response });
+              } catch (error) {
+                console.log(error);
+                return res.status(500).json(error);
+              }
+            } else {
+              return res.status(400).json({ errors });
+            }
+          } else {
+            return res.status(400).json({ errors });
+          }
+        } else {
+          return res.status(400).json({ errors });
+        }
+      }
+    });
+  }
+  async imageUpdate(req, res) {
+    const form = formidable({ multiples: true });
+    form.parse(req, async (err, fields, files) => {
+      console.log("fgggggggg--------->", fields?.id);
+      if (!err) {
+        const errors = [];
+        if (errors.length === 0) {
+          if (!files["image"]) {
+            errors.push({ msg: "Image is required" });
+          }
+          if (errors.length === 0) {
+            const images = {};
+            const mimeType = files[`image`].mimetype;
+            const extension = mimeType.split("/")[1].toLowerCase();
+            if (
+              extension === "jpeg" ||
+              extension === "jpg" ||
+              extension === "png"
+            ) {
+              const imageName = uuidv4() + `.${extension}`;
+              const __dirname = path.resolve();
+              const newPath =
+                __dirname + `/../client/public/uploads/flexs/${imageName}`;
+              images[`image`] = imageName;
+              fs.copyFile(files[`image`].filepath, newPath, (err) => {
+                if (err) {
+                  console.log(err);
+                }
+              });
+            } else {
+              const error = {};
+              error["msg"] = `image has invalid ${extension} type`;
+              errors.push(error);
+            }
+            // }
+            if (errors.length === 0) {
+              try {
+                const response = await flexDB.updateOne(
+                  { _id: fields?.id },
+                  { $set: { image: images["image"]}}
+                  );
+                return res
+                  .status(201)
+                  .json({ msg: "Flex Image has Updated !", response });
               } catch (error) {
                 console.log(error);
                 return res.status(500).json(error);
@@ -103,7 +163,7 @@ class FlexController {
 
   async fetchFlex(req, res) {
     const { id } = req.params;
-    console.log("OO",id);
+    
     try {
       const response = await flexDB.findOne({ _id: id });
       return res.status(200).json({ flex: response });
@@ -114,22 +174,19 @@ class FlexController {
   }
 
   async updateFlex(req, res) {
-    const { id } = req.params;
-    
-    const { name , url } = req.body;
-    console.log("LL",url);
+    const {_id,name,url} = req.body;
+    console.log("LLbbbbbbbb",_id);
     const errors = validationResult(req);
-
     if (errors.isEmpty()) {
-      const exist = await flexDB.findOne({ _id: id});
+      const exist = await flexDB.findOne({ _id});
       if (exist) {
         const response = await flexDB.updateOne(
-          { _id: id },
-          { $set: { name, url } }
+          { _id },
+          { $set: { name, url}}
         );
         return res
           .status(200)
-          .json({ message: "Your flex has been updated successfully!" });
+          .json({ msg: "Your flex has been updated successfully!" });
       } else {
         return res
           .status(400)

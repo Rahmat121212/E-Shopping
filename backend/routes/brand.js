@@ -13,7 +13,7 @@ router.get("/fetchbrand/:id", Brands.fetchBrand);
 
 // Update a specific Flex entry by ID
 router.put("/brand/:id", Brands.updateBrand);
-router.put("/brand-image/:id", Brands.updateBrandimage);
+router.put("/update-brand-image", Brands.imageUpdate);
 // Delete a specific Flex entry by ID
 router.delete("/brand/:id", Brands.deleteBrand);
 

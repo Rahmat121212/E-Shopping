@@ -23,23 +23,23 @@ const UpdateFlex = () => {
      const errors = response?.error?.data?.errors ? response?.error?.data?.errors : [];
     const updateSubmit = e => {
        e.preventDefault();
-       saveFlex(state, id);
+       saveFlex(state,id);
    }
    const navigate = useNavigate();
    const dispatch = useDispatch();
    useEffect(() => {
        if(response?.isSuccess) {
-           dispatch(setSuccess(response?.data?.message));
-          navigate('/dashboard/brand');
+           dispatch(setSuccess(response?.data?.msg));
+          navigate('/dashboard/flex');
        }
    }, [response?.isSuccess])
     return(
        <Wrapper>
            <ScreenHeader>
-              <Link to="/dashboard/brand" className="btn-dark rounded-xl"><i className="bi bi-arrow-left-short"></i> Brand list</Link>
+              <Link to="/dashboard/flex" className="btn-dark rounded-xl"><i className="bi bi-arrow-left-short"></i> Flex list</Link>
            </ScreenHeader>
            {!isFetching ? <form className="w-full md:w-8/12" onSubmit={updateSubmit}>
-               <h3 className="text-lg capitalize mb-3">Update Brand</h3>
+               <h3 className="text-lg capitalize mb-3">Update Flex</h3>
                {errors.length > 0 && errors.map((error, key) => (
                    <p className="alert-danger" key={key}>{error.msg}</p>
                ))}

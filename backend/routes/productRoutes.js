@@ -12,6 +12,10 @@ router.put(
   [Authorization.authorized, productValidations],
   Product.updateProduct
 );
+router.put(
+  "/update-product-image",
+  Product.imageUpdate
+);
 router.delete("/delete/:id", Authorization.authorized, Product.deleteProduct);
 router.get("/cat-products/:name/:page?", HomeProducts.catProducts);
 router.get("/cat-productsbrand/:name/:page?", HomeProducts.catProductsBrands);

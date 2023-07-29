@@ -6,16 +6,22 @@ import Wrapper from "./Wrapper";
 import { useCreateMutation, useFetchCategoryQuery, useUpdateCategoryImageMutation } from "../../store/services/categoryService";
 import { setSuccess } from "../../store/reducers/globalReducer";
 import ImagesPreview from "../../components/ImagesPreview";
-const UpdateCategoryImage = () => {
+import { useFetchFlexQuery, useUpdateFlexImageMutation } from "../../store/services/flexService";
+import { useGetProductQuery, useUpdateProductImageMutation } from "../../store/services/productService";
+const UpdateProductImage = () => {
   const {id} = useParams();
   console.log("id,.,.",id);
-  const {data:cate, isFetching} = useFetchCategoryQuery(id);
-    console.log('category data: ',cate?.category?.image)
+  const {data:cate, isFetching} = useGetProductQuery(id);
+    console.log('Product data: ',cate?.image1)
   const [state, setState] = useState({
-    image :""
+    image1: "",
+    image2: "",
+    image3: "",
   });
   const [preview, setPreview] = useState({
-    image: ""
+    image1: "",
+    image2: "",
+    image3: "",
   });
 const imageHandle = (e) => {
   if (e.target.files.length !== 0) {
@@ -28,14 +34,16 @@ const imageHandle = (e) => {
   }
 };
 console.log("Image",state);
-  const [saveCategory, response] = useUpdateCategoryImageMutation();
+  const [saveCategory, response] = useUpdateProductImageMutation();
   console.log(">>>",response?.error?.data?.errors[0] );
   const errors = response?.error?.data?.errors ? response?.error?.data?.errors : [];
   const createPro = (e) => {
     e.preventDefault();
     const formData = new FormData()
     formData.append('id', id)
-    formData.append('image', state.image)
+    formData.append("image1", state.image1);
+    formData.append("image2", state.image2);
+    formData.append("image3", state.image3);
     saveCategory(formData);
   };
   const navigate = useNavigate();
@@ -43,30 +51,56 @@ console.log("Image",state);
   useEffect(() => {
     if (response?.isSuccess) {
       dispatch(setSuccess(response?.data?.msg));
-      navigate("/dashboard/categories");
+      navigate("/dashboard/product");
     }
   }, [response?.isSuccess]);
   return (
     <Wrapper>
       <ScreenHeader>
-        <Link to="/dashboard/categories" className="btn-dark rounded-xl">
-          <i className="bi bi-arrow-left-short"></i> categories list
+        <Link to="/dashboard/product" className="btn-dark rounded-xl">
+          <i className="bi bi-arrow-left-short"></i> Flex list
         </Link>
       </ScreenHeader>
       <div className="flex flex-wrap -mx-3">
         <form className="w-full xl:w-8/12 p-3" onSubmit={createPro}>
         {errors.length > 0 && errors.map((error, key) => (
-                   <p className="alert-danger" key={key}>{error.msg}</p>
+                   <p className="alert-danger w-[320px] " key={key}>{error.msg}</p>
                ))}
           <div className="flex flex-wrap">
           <div className="w-full p-3">
               <label htmlFor="image1" className="label">
-                Image 
+                Image 1
               </label>
               <input
                 type="file"
-                name="image"
-                id="image"
+                name="image1"
+                id="image1"
+                className="input-file"
+                onChange={imageHandle}
+              />
+            </div>
+
+            <div className="w-full p-3">
+              <label htmlFor="image2" className="label">
+                Image 2
+              </label>
+              <input
+                type="file"
+                name="image2"
+                id="image2"
+                className="input-file"
+                onChange={imageHandle}
+              />
+            </div>
+
+            <div className="w-full p-3">
+              <label htmlFor="image3" className="label">
+                Image 3
+              </label>
+              <input
+                type="file"
+                name="image3"
+                id="image3"
                 className="input-file"
                 onChange={imageHandle}
               />
@@ -81,11 +115,18 @@ console.log("Image",state);
           </div>
         </form>
         <div className="w-full xl:w-4/12 p-3">
-          <ImagesPreview url={`/uploads/${cate?.category?.image}`} heading="Previous Image" />
-          <ImagesPreview url={preview.image} heading="New image" />
+          <ImagesPreview url={`/images/${cate?.image1}`} heading="Previous Image 1" />
+          <ImagesPreview url={`/images/${cate?.image2}`} heading="Previous Image 2" />
+          <ImagesPreview url={`/images/${cate?.image3}`} heading="Previous Image 3" />
         </div>
+        <div className="w-full ml-0 sm:w-4/12 lg:ml-[350px]  xl:-mt-[720px]   p-3">
+          <ImagesPreview url={preview.image1} heading="New image 1" />
+          <ImagesPreview url={preview.image2} heading="New image 2" />
+          <ImagesPreview url={preview.image3} heading="New image 3" />
+        </div>
+        
       </div>
     </Wrapper>
   );
 };
-export default UpdateCategoryImage;
+export default UpdateProductImage;

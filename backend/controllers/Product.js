@@ -10,7 +10,7 @@ class Product {
     form.parse(req, async (err, fields, files) => {
       if (!err) {
         const parsedData = JSON.parse(fields.data);
-        console.log("MNMN>>>",parsedData);
+        console.log("MNMN>>>", parsedData);
         const errors = [];
         if (parsedData.title.trim().length === 0) {
           errors.push({ msg: "Title is required" });
@@ -104,6 +104,80 @@ class Product {
       }
     });
   }
+  async imageUpdate(req, res) {
+    const form = formidable({ multiples: true });
+    form.parse(req, async (err, fields, files) => {
+      console.log("Pro image--------->", fields?.id);
+      if (!err) {
+        const errors = [];
+        if (errors.length === 0) {
+          if (!files["image1"]) {
+            errors.push({ msg: "Image1 is required" });
+          }
+          if (!files["image2"]) {
+            errors.push({ msg: "Image2 is required" });
+          }
+          if (!files["image3"]) {
+            errors.push({ msg: "Image3 is required" });
+          }
+          if (errors.length === 0) {
+            const images = {};
+            for (let i = 0; i < Object.keys(files).length; i++) {
+              const mimeType = files[`image${i + 1}`].mimetype;
+              const extension = mimeType.split("/")[1].toLowerCase();
+              if (
+                extension === "jpeg" ||
+                extension === "jpg" ||
+                extension === "png"
+              ) {
+                const imageName = uuidv4() + `.${extension}`;
+                const __dirname = path.resolve();
+                const newPath =
+                  __dirname + `/../client/public/images/${imageName}`;
+                images[`image${i + 1}`] = imageName;
+                fs.copyFile(files[`image${i + 1}`].filepath, newPath, (err) => {
+                  if (err) {
+                    console.log(err);
+                  }
+                });
+              } else {
+                const error = {};
+                error["msg"] = `image${i + 1} has invalid ${extension} type`;
+                errors.push(error);
+              }
+            }
+            if (errors.length === 0) {
+              try {
+                const response = await ProductModel.updateOne(
+                  { _id: fields?.id },
+                  {
+                    $set: {
+                      image1: images["image1"],
+                      image2: images["image2"],
+                      image3: images["image3"],
+                    },
+                  }
+                );
+                return res
+                  .status(201)
+                  .json({ msg: "Product Image  has Updated!", response });
+              } catch (error) {
+                console.log(error);
+                return res.status(500).json(error);
+              }
+            } else {
+              return res.status(400).json({ errors });
+            }
+          } else {
+            return res.status(400).json({ errors });
+          }
+        } else {
+          return res.status(400).json({ errors });
+        }
+      }
+    });
+  }
+
   async get(req, res) {
     const { page } = req.params;
     const perPage = 5;
@@ -120,7 +194,7 @@ class Product {
     }
   }
   async cardProduct(req, res) {
-    const page= 1
+    const page = 1;
     const perPage = 8;
     const skip = (page - 1) * perPage;
     try {
@@ -129,7 +203,7 @@ class Product {
         .skip(skip)
         .limit(perPage)
         .sort({ updatedAt: -1 });
-      return res.status(200).json({ products: response});
+      return res.status(200).json({ products: response });
     } catch (error) {
       console.log(error.message);
     }
@@ -147,7 +221,7 @@ class Product {
   }
   async updateProduct(req, res) {
     const errors = validationResult(req);
-    console.log("BAcke",req.body);
+    console.log("BAcke", req.body);
     if (errors.isEmpty()) {
       try {
         const {
@@ -160,7 +234,7 @@ class Product {
           sizes,
           description,
           category,
-          brand
+          brand,
         } = req.body;
         const response = await ProductModel.updateOne(
           { _id },
