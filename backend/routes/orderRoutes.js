@@ -4,6 +4,7 @@ const Authorization = require("../services/Authorization");
 const ratingValidations = require("../validations/ratingValidations");
 const router = Router();
 router.get("/orders", Orders.getOrders);
+router.get("/allOrders", Orders.dashboardOrder);
 router.get("/order-details/:id",  Orders.orderDetails);
 router.put("/order-update",  Orders.updateOrder);
 router.post(

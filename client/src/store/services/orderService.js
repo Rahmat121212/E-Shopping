@@ -23,6 +23,15 @@ const orderService = createApi({
         },
         providesTags: ["orders"],
       }),
+      getAllOrders: builder.query({
+        query: () => {
+          return {
+            url: `/allOrders`,
+            method: "GET",
+          };
+        },
+        providesTags: ["orders"],
+      }),
       details: builder.query({
         query: (id) => {
           return {
@@ -44,6 +53,6 @@ const orderService = createApi({
     };
   },
 });
-export const { useGetOrdersQuery, useDetailsQuery, useDeliverOrderMutation } =
+export const { useGetOrdersQuery,useGetAllOrdersQuery, useDetailsQuery, useDeliverOrderMutation } =
   orderService;
 export default orderService;

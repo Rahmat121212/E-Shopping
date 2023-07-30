@@ -42,6 +42,8 @@ import Customer from "../screens/dashboard/Customer";
 import UpdateCategoryImage from "../screens/dashboard/UpdateCategoryImage";
 import UpdateFlexImage from "../screens/dashboard/UpdateFlexImage";
 import UpdateProductImage from "../screens/dashboard/UpdateProductImage";
+import CreateDeliveryBoy from "../screens/dashboard/CreateDeliveryBoy";
+import EditDeliveryBoy from "../screens/dashboard/EditDeliveryBoy";
 // import Dashboard from "../screens/dashboard/Dashboard";
 
 const Routing = () => {
@@ -123,6 +125,38 @@ const Routing = () => {
             element={
               <Private>
                 <Admin />
+              </Private>
+            }
+          />
+           <Route
+            path="deliver-body/:page"
+            element={
+              <Private>
+                <AdminDashboard />
+              </Private>
+            }
+          />
+          <Route
+            path="deliver-body"
+            element={
+              <Private>
+                <AdminDashboard />
+              </Private>
+            }
+          />
+          <Route
+            path="create-delivery"
+            element={
+              <Private>
+                <CreateDeliveryBoy />
+              </Private>
+            }
+          />
+          <Route
+            path="update-boy/:id"
+            element={
+              <Private>
+                <EditDeliveryBoy />
               </Private>
             }
           />

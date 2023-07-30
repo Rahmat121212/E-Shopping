@@ -2,6 +2,7 @@ const {validationResult} = require("express-validator");
 const UserModel = require("../models/User");
 const {hashedPassword, createToken,comparePassword} = require("../services/authServices");
 const CustomerModel = require("../models/Customer");
+const DeliveryModel = require("../models/delivery");
 
 // @route POST /api/register
 // @access Public
@@ -85,7 +86,6 @@ module.exports.getCustomer = async(req, res)=>{
 
 module.exports.deleteCustomer = async(req, res) => {
         const { id } = req.params;
-    
         try {
           await CustomerModel.deleteOne({ _id: id });
           return res
@@ -127,7 +127,97 @@ module.exports.registerCustomer = async (req, res) => {
         return res.status(400).json({errors: errors.array()})
     }
 }
+module.exports.registerDelivery = async (req, res) => {
+    const errors = validationResult(req);
+    if(errors.isEmpty()){
+        const {name, email,contact,location } = req.body;
+        try {
+            const emailExist = await DeliveryModel.findOne({email});
+            if(!emailExist) {
+                const user = await DeliveryModel.create({
+                    name,
+                    email,
+                    contact,
+                    location
+                });
+                return res.status(201).json({msg: 'Your Delivery Boy has been created!'});
+            } else {
+                // email already taken
+                return res.status(400).json({errors: [{msg: `${email} is already taken`, param: 'email'}]})
+            }
+        } catch (error) {
+            console.log(error.message);
+            return res.status(500).json("Server internal error!");
+        }
+    } else {
+        // validations failed
+        return res.status(400).json({errors: errors.array()})
+    }
+}
+module.exports.getDelivery = async(req, res)=>{
+    const page = req.params.page;
+    const perPage = 4;
+    const skip = (page - 1) * perPage;
+    try {
+      const count = await DeliveryModel.find({}).countDocuments();
+      const response = await DeliveryModel.find({})
+        .skip(skip)
+        .limit(perPage)
+        .sort({ updatedAt: -1 });
+      return res.status(200).json({ data: response, perPage, count });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json("Server internal error!");
+    }
+  }
+  module.exports.fetchDelivery = async (req, res) => {
+    const { id } = req.params;
+    console.log("...",id);
+    try {
+      const response = await DeliveryModel.findOne({ _id: id });
+      return res.status(200).json({ delivery: response });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json("Server internal error!");
+    }
+  }
+  module.exports.updateDelivery = async(req, res)=>{
+  
+    const { _id,name, email,location,contact } = req.body;
+    const errors = validationResult(req);
 
+    if (errors.isEmpty()) {
+      const exist = await DeliveryModel.findOne({ _id });
+      if (exist) {
+        const response = await DeliveryModel.updateOne(
+          { _id },
+          { $set: { name, email,location,contact } }
+        );
+        return res
+          .status(200)
+          .json({ msg: "Your Delivery Boy has been updated successfully!" });
+      } else {
+        return res
+          .status(400)
+          .json({ errors: [{ msg: `${name} DElivery Boy Not Found!` }] });
+      }
+    } else {
+      return res.status(400).json({ errors: errors.array() });
+    }
+  }
+  module.exports.deleteDelivery = async(req, res) => {
+    const { id } = req.params;
+    try {
+      await DeliveryModel.deleteOne({ _id: id });
+      return res
+        .status(200)
+        .json({ msg: "Delivery Boy has been deleted successfully!" });
+    } catch (error) {
+      console.log(error.message);
+      return res.status(500).json("Server internal error!");
+    }
+
+}
 // @route POST /api/login
 // @access Public
 // @desc Login user and return a token

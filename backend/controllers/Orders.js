@@ -10,6 +10,12 @@ class Orders {
     const option = query.userId ? { userId: query.userId } : {};
     try {
       const count = await OrderModel.find(option).countDocuments();
+      const orderPending = await OrderModel.find({
+        received :false
+      }).countDocuments();
+      const orderReceived = await OrderModel.find({
+        received :true
+      }).countDocuments();
       const response = await OrderModel.find(option)
         .populate(
           "productId",
@@ -19,8 +25,20 @@ class Orders {
         .skip(skip)
         .limit(perPage)
         .sort({ createdAt: -1 });
-      console.log(response);
-      return res.status(200).json({ orders: response, perPage, count });
+    
+      return res.status(200).json({ orders: response, perPage, count,orderPending,orderReceived });
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+  async dashboardOrder(req,res){
+    try {
+      const response = await OrderModel.find()
+        .populate(
+          "productId",
+          "-colors -sizes -createdAt -updatedAt -stock -image2 -image3"
+        )
+        return res.status(200).json({ orders: response });
     } catch (error) {
       console.log(error.message);
     }
@@ -35,6 +53,7 @@ class Orders {
         )
         .populate("userId", "-password -updatedAt -createdAt -admin");
       return res.status(200).json({ details });
+      console.log("ddd",details);
     } catch (error) {
       console.log(error.message);
       return res.status(500).json({ errors: error });

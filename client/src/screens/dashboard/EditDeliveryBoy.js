@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Wrapper from "./Wrapper";
 import { FaProductHunt } from "react-icons/fa";
 import { BsBag, BsListStars } from "react-icons/bs";
@@ -9,27 +9,28 @@ import { clearMessage, setSuccess } from "../../store/reducers/globalReducer";
 import { RiAdminLine } from "react-icons/ri";
 import { BsCashCoin, BsBagCheck, BsBagDash, BsBagPlus,BsPerson } from "react-icons/bs";
 import ScreenHeader from "../../components/ScreenHeader";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useGetProductsQuery } from "../../store/services/productService";
 import { useGetQuery } from "../../store/services/categoryService";
 import { useDeleteBrandMutation, useGetBrandsQuery } from "../../store/services/brandService";
 import { useGetfeedbackQuery } from "../../store/services/feedbackService";
 import Spinner from "../../components/Spinner";
-import { useGetAllOrdersQuery, useGetOrdersQuery } from "../../store/services/orderService";
+import { useGetOrdersQuery } from "../../store/services/orderService";
 import {
-  useDeleteBoyMutation,
+  useAuthRegisterMutation,
+  useBoyRegisterMutation,
+  useBoyUpdateMutation,
   useGetAuthQuery,
   useGetBoyQuery,
   useGetCustomerQuery,
+  useGetOneBoyQuery,
 } from "../../store/services/authService";
 import { useDispatch, useSelector } from "react-redux";
-import Pagination from "../../components/Pagination";
 import toast, { Toaster } from "react-hot-toast";
-const AdminDashboard = () => {
-  let {page} = useParams();
-   if(!page) {
-      page = 1;
-   }
+const EditDeliveryBoy = () => {
+
+  let {id} = useParams();
+  const [state, setState] = useState('');
   const { data, isFetching } = useGetProductsQuery(1);
   const { data: category, isFetching: fetching } = useGetQuery(1);
   const { data: brand, isFetching: fetch } = useGetBrandsQuery(1);
@@ -37,41 +38,47 @@ const AdminDashboard = () => {
   const { data: order, isFetching: fet } = useGetOrdersQuery(1);
   const { data: customer, isFetching: f } = useGetCustomerQuery(1);
   const { data: admin, isFetching: fetchi } = useGetAuthQuery(1);
- 
- 
-  const {success} = useSelector(state => state.globalReducer);
-    const dispatch = useDispatch();
-    const [removeBrand, response] = useDeleteBoyMutation();
-  const {data:data1 , isFetching:isf} = useGetBoyQuery(page);
+  const {data:data1 , isFetching:isf} = useGetBoyQuery(1);
+  const {data:boys,isFetching:fetchingBoy} = useGetOneBoyQuery(id);
   
-  const deleteCat = id => {
-    if(window.confirm('Are you really want to delete the Brand ?')) {
-      removeBrand(id);
-    }
- }
- useEffect(() => {
-  if(success) {
-    toast.success(success);
+//  create code
+
+useEffect(() => {
+  boys?.delivery  && setState(boys?.delivery);
+}, [boys?.delivery])
+const handleInput = (e) => {
+  setState({ ...state, [e.target.name]: e.target.value });
+};
+console.log("SSS--->",state);
+const [login, response] = useBoyUpdateMutation();
+console.log("SSS--->",response);
+const createPro = (e) => {
+  e.preventDefault();
+  login(state)
+ 
+};
+useEffect(() => {
+  if (!response.isSuccess) {
+    response?.error?.data?.errors.map((err) => {
+      toast.error(err.msg);
+    });
   }
-  return () => {
-     dispatch(clearMessage())
-  }
- }, [])
- useEffect(() => {
+}, [response?.error?.data?.errors]);
+useEffect(() => {
   if (response.isSuccess) {
       toast.success(response?.data?.msg);
   }
 }, [response?.data?.msg]);
- useEffect(() => {
-      if(response.isSuccess) {
-         dispatch(setSuccess(response?.data?.msg));
-      }
- }, [response?.data?.message])
- useEffect(() => {
-  return () => {
-     dispatch(clearMessage())
+const dispatch = useDispatch();
+const navigate = useNavigate();
+useEffect(() => {
+  if (response?.isSuccess) {
+    navigate("/dashboard/dashboard");
   }
- }, [])
+}, [response?.isSuccess]);
+
+//  create code
+   
  
   return (
     <Wrapper>
@@ -246,40 +253,82 @@ const AdminDashboard = () => {
           </div>
           <div className="w-full h-[800px] sm:w-full  xl:h-[450px]   p-2    flex justify-center items-center  h-full sm:w-6/12 lg:w-6/12 xl:w-6/12 ">
             <div className="w-full  h-full bg-black border-[1px] border-black rounded-lg">
-              <ScreenHeader>
-                <div className="flex justify-between pr-2" >
-                <button className="btn-dark rounded-xl ml-3">
-                  Delivery Boys List
-                </button>
-                <Link to="/dashboard/create-delivery" className="btn-dark rounded-xl ">
-                  Create
-                </Link>
-                </div>
-              </ScreenHeader>
-              <Toaster position="top-right" reverseOrder={true} />
-           {!isFetching ? data1?.data?.length > 0 && <><div>
-              <table className="w-full bg-gray-900 ">
-                 <thead>
-                    <tr className="border-b border-gray-800 text-left">
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">name</th>
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">location</th>
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">edit</th>
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">delete</th>
-                    </tr>
-                 </thead>
-                 <tbody>
-                    {data1?.data?.map(boy => (
-                       <tr key={boy._id} className="odd:bg-gray-800">
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{boy.name}</td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400">{boy.location}</td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/update-boy/${boy._id}`} className="btn btn-warning">edit</Link></td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><button className="btn btn-danger" onClick={() => deleteCat(boy._id)}>delete</button></td>
-                       </tr>
-                    ))}
-                 </tbody>
-              </table>
-           </div><Pagination page={parseInt(page)} perPage={data1.perPage} count={data1.count} path="dashboard/deliver-body" /></> : <Spinner />}
+            <ScreenHeader>
+        <Link to="/dashboard/dashboard" className="btn-dark rounded-xl ml-2">
+          <i className="bi bi-arrow-left-short"></i> Delivery Boys list
+        </Link>
+      </ScreenHeader>
+      <Toaster position="top-right" reverseOrder={true} />
+      <div className="flex flex-wrap -mx-3">
+        <form className="w-full xl:w-12/12 p-3" onSubmit={createPro}>
+          <div className="flex flex-wrap">
+            <div className="w-full md:w-6/12 p-3">
+              <label htmlFor="title" className="label">
+                Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                className="form-control"
+                id="name"
+                placeholder="Name..."
+                onChange={handleInput}
+                value={state.name}
+              />
             </div>
+            <div className="w-full md:w-6/12 p-3">
+              <label htmlFor="title" className="label">
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="form-control"
+                id="email"
+                placeholder="Email..."
+                onChange={handleInput}
+                value={state.email}
+              />
+            </div>
+            <div className="w-full md:w-6/12 p-3">
+              <label htmlFor="title" className="label">
+                Contact
+              </label>
+              <input
+                type="number"
+                name="contact"
+                className="form-control"
+                id="contact"
+                placeholder="Phone No.."
+                onChange={handleInput}
+                value={state.contact}
+              />
+            </div><div className="w-full md:w-6/12 p-3">
+              <label htmlFor="title" className="label">
+                Location
+              </label>
+              <input
+                type="text"
+                name="location"
+                className="form-control"
+                id="location"
+                placeholder="Location..."
+                onChange={handleInput}
+                value={state.location}
+              />
+            </div>
+            <div className="w-full p-3">
+              <input
+                type="submit"
+                value={"Update"}
+                disabled={response.isLoading ? true : false}
+                className="btn btn-indigo"
+              />
+            </div>
+          </div>
+        </form>
+      </div>
+             </div>
           </div>
         </div>
       </div>
@@ -287,4 +336,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default EditDeliveryBoy;

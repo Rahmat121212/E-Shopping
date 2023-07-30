@@ -10,7 +10,6 @@ const orderRoutes = require("./routes/orderRoutes");
 const flexRoutes = require("./routes/flexRoutes");
 const brandRoutes = require("./routes/brand")
 const feedback = require("./routes/feedbackRouting")
-const nc = require("./routes/n")
 const app = express();
 
 // database connection
@@ -40,7 +39,7 @@ app.use("/api", flexRoutes);
 app.use("/api", brandRoutes);
 app.use("/api", feedback);
 
-app.use("/api", nc);
+
 
 const port = env.PORT || 5000;
 
