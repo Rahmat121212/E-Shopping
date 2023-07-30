@@ -10,7 +10,7 @@ const AdminNav = ({openSidebar}) => {
         dispatch(logout('admin-token'));
     }
     return(
-     <nav className="fixed left-0  sm:left-64 top-4 right-0 mx-4">
+     <nav className="fixed left-0  sm:left-64 top-4 right-0 mx-4 z-[1000]">
       <div className="bg-gray-800 w-full rounded-lg flex justify-between sm:justify-between items-center p-4">
       <i className="bi bi-filter-left text-white text-2xl cursor-pointer sm:hidden block" onClick={openSidebar}></i>
       {
