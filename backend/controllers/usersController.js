@@ -49,7 +49,7 @@ module.exports.register = async (req, res) => {
 };
 module.exports.getAdmin = async (req, res) => {
   const page = req.params.page;
-  const perPage = 6;
+  const perPage = 5;
   const skip = (page - 1) * perPage;
   try {
     const count = await UserModel.find({}).countDocuments();
@@ -76,27 +76,27 @@ module.exports.fetcAdmin = async (req, res) => {
 module.exports.updateAdmin = async (req, res) => {
   const {name,email} = req.body;
 
-  const errors = validationResult(req);
+  // const errors = validationResult(req);
 
-  if (errors.isEmpty()) {
-    const exist = await UserModel.findOne({email});
-    console.log("vvvcvc",exist);
-    if (!exist) {
-      const response = await UserModel.updateOne(
-        { email },
-        { $set: {name,email}}
-      );
-      return res
-        .status(200)
-        .json({ msg: "Your Admin  has been updated successfully!" });
-    } else {
-      return res
-        .status(400)
-        .json({ errors: [{ msg: `${email}  Email  Already Exist !` }] });
-    }
-  } else {
-    return res.status(400).json({ errors: errors.array() });
-  }
+  // if (errors.isEmpty()) {
+  //   const exist = await UserModel.findOne({email});
+  //   console.log("vvvcvc",exist);
+  //   if (!exist) {
+  //     const response = await UserModel.updateOne(
+  //       { email },
+  //       { $set: {name,email}}
+  //     );
+  //     return res
+  //       .status(200)
+  //       .json({ msg: "Your Admin  has been updated successfully!" });
+  //   } else {
+  //     return res
+  //       .status(400)
+  //       .json({ errors: [{ msg: `${email}  Email  Already Exist !` }] });
+  //   }
+  // } else {
+  //   return res.status(400).json({ errors: errors.array() });
+  // }
 };
 
 module.exports.deleteAdmin = async (req, res) => {
