@@ -44,6 +44,7 @@ import UpdateFlexImage from "../screens/dashboard/UpdateFlexImage";
 import UpdateProductImage from "../screens/dashboard/UpdateProductImage";
 import CreateDeliveryBoy from "../screens/dashboard/CreateDeliveryBoy";
 import EditDeliveryBoy from "../screens/dashboard/EditDeliveryBoy";
+import UpdateAdmin from "../screens/dashboard/UpdateAdmin";
 // import Dashboard from "../screens/dashboard/Dashboard";
 
 const Routing = () => {
@@ -128,6 +129,14 @@ const Routing = () => {
               </Private>
             }
           />
+          {/* <Route
+            path="admin-update/:id"
+            element={
+              <Private>
+                <UpdateAdmin />
+              </Private>
+            }
+          /> */}
            <Route
             path="deliver-body/:page"
             element={
@@ -360,7 +369,7 @@ const Routing = () => {
           <Route path="order-details/:id" element={<OrderDetails />} />
           <Route path="*" element={<Admin_NOT_Found_Page/>}  />
         </Route>
-       
+        <Route path="*" element={<Admin_NOT_Found_Page/>}  />
       </Routes>
     </BrowserRouter>
   );

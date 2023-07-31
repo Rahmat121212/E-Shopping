@@ -45,8 +45,7 @@ const Admin = () => {
                     <tr className="border-b border-gray-800 text-left">
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">name</th>
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">email</th>
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">edit email</th>
-                       <th className="p-3 uppercase text-sm font-medium text-gray-500">edit name , password</th>
+                       {/* <th className="p-3 uppercase text-sm font-medium text-gray-500">edit</th> */}
                        <th className="p-3 uppercase text-sm font-medium text-gray-500">delete</th>
                     </tr>
                  </thead>
@@ -55,8 +54,7 @@ const Admin = () => {
                        <tr key={item._id} className="odd:bg-gray-800">
                           <td className="p-3 capitalize text-sm font-normal text-gray-400">{item.name}</td>
                           <td className="p-3  text-sm font-normal text-gray-400">{item.email}</td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/${item._id}`} className="btn btn-warning">edit</Link></td>
-                          <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard//${item._id}`} className="btn btn-warning">edit</Link></td>
+                          {/* <td className="p-3 capitalize text-sm font-normal text-gray-400"><Link to={`/dashboard/admin-update/${item._id}`} className="btn btn-warning">edit</Link></td> */}
                           <td className="p-3 capitalize text-sm font-normal text-gray-400"><button className="btn btn-danger" onClick={() => deleteCat(item._id)}>delete</button></td>
                        </tr>
                     ))}

@@ -28,10 +28,30 @@ const authService = createApi({
         },
         invalidatesTags: ["auths"],
       }),
+      updateAdmin: builder.mutation({
+        query: (data) => {
+          return {
+            url: `update-admin`,
+            method: "PUT",
+            body: data,
+          };
+        },
+        invalidatesTags: ["auths"],
+      }),
+    
       getAuth: builder.query({
         query: (page) => {
           return {
             url: `getAdmin/${page}`,
+            method: "GET",
+          };
+        },
+        providesTags: ["auths"],
+      }),
+      getSingleAdmin: builder.query({
+        query: (id) => {
+          return {
+            url: `fetch-admin/${id}`,
             method: "GET",
           };
         },
@@ -139,10 +159,12 @@ export const {
   useAuthLoginMutation,
   useBoyUpdateMutation,
   useBoyRegisterMutation,
+  useUpdateAdminMutation,
   useDeleteAdminMutation,
   useDeleteBoyMutation,
   useDeleteCustomerMutation,
   useGetAuthQuery,
+  useGetSingleAdminQuery,
   useGetBoyQuery,
   useGetOneBoyQuery,
   useGetCustomerQuery,
